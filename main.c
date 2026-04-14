@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 void menu(){
@@ -8,15 +9,34 @@ void menu(){
 
 void old_game(){
     int vidap1 = 9,vidap2 = 9;
-    
+    int game[3][3];
+    int jogadaColuna,jogadaLinha;
 
     for(int c = 0;c<9;c++){
-        printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\ncoluna: 3\nlinha: 2\n")
+        printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\ncoluna: 3\nlinha: 2\n");
         if(c%2==0){
             printf("turno %d\n,Vez do Jogador O - Escolha uma posição.\n", c);
-
+            printf("coluna: ");
+            scanf("%i", &jogadaColuna);
+            printf("linha: ");
+            scanf("%i", &jogadaLinha);
+            if(game[jogadaLinha][jogadaColuna] != NULL){
+                game[jogadaLinha][jogadaColuna]= 0;
+            }else{
+                printf("já foi jogado nesse lugar");
+            }
         }else{
             printf("turno %d\nVez do Jogador X - Escolha uma posição.\n", c);
+            printf("coluna: ");
+            scanf("%i", &jogadaColuna);
+            printf("linha: ");
+            scanf("%i", &jogadaLinha);
+            
+            if(game[jogadaLinha][jogadaColuna] != NULL){
+                game[jogadaLinha][jogadaColuna]= 1;
+            }else{
+                printf("já foi jogado nesse lugar");
+            }
         }
     }
 }
