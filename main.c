@@ -11,38 +11,57 @@ void old_game(){
     int vidap1 = 9,vidap2 = 9;
     int game[3][3];
     int jogadaColuna,jogadaLinha;
-
+    
+    
+    for(int i = 0; i < 3;i++){
+            for(int c = 0;c < 3;c++){
+                game[i][c] = 2; 
+        }
+    }
+    
+    printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\ncoluna: 3\nlinha: 2\n");
     for(int c = 0;c<9;c++){
-        printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\ncoluna: 3\nlinha: 2\n");
+        
+        for(int i = 0; i < 3;i++){
+            for(int c = 0;c < 3;c++){
+                printf("[%i] ", game[i][c]); 
+        }
+        printf("\n");
+    }
         if(c%2==0){
-            printf("turno %d\n,Vez do Jogador O - Escolha uma posição.\n", c);
-            printf("coluna: ");
-            scanf("%i", &jogadaColuna);
+            printf("\nturno %d\n,Vez do Jogador O - Escolha uma posição.\n", c);
             printf("linha: ");
-            scanf("%i", &jogadaLinha);
-            if(game[jogadaLinha][jogadaColuna] != NULL){
-                game[jogadaLinha][jogadaColuna]= 0;
+            scanf(" %i", &jogadaLinha);
+            printf("coluna: ");
+            scanf(" %i", &jogadaColuna);
+            if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0){
+                game[jogadaLinha-1][jogadaColuna-1] = 1;
+                printf("o jogador x jogou na posição %i x %i o valor %i\n", jogadaLinha, jogadaColuna, game[jogadaLinha][jogadaColuna]);
             }else{
-                printf("já foi jogado nesse lugar");
+                printf("\njá foi jogado nesse lugar\n\n");
+                c--;
             }
+            
         }else{
             printf("turno %d\nVez do Jogador X - Escolha uma posição.\n", c);
-            printf("coluna: ");
-            scanf("%i", &jogadaColuna);
             printf("linha: ");
-            scanf("%i", &jogadaLinha);
+            scanf(" %i", &jogadaLinha);
+            printf("coluna: ");
+            scanf(" %i", &jogadaColuna);
             
-            if(game[jogadaLinha][jogadaColuna] != NULL){
-                game[jogadaLinha][jogadaColuna]= 1;
+            
+            if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0){
+                game[jogadaLinha-1][jogadaColuna-1] = 0;
+                printf("o jogador x jogou na posição %i x %i o valor %i\n", jogadaLinha, jogadaColuna, game[jogadaLinha][jogadaColuna]);
             }else{
-                printf("já foi jogado nesse lugar");
+                printf("\njá foi jogado nesse lugar\n\n");
+                c--;
             }
         }
     }
 }
 
-int main()
-{
+int main(){
     bool loop = true;
     int opc;
     
@@ -80,7 +99,7 @@ int main()
         
         default:
             printf("insira uma opção valida.\n\n");
-            break;
+        break;
         }
     }while(loop == true);
     
