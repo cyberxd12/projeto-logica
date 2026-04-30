@@ -20,7 +20,7 @@ void old_game() {
 		}
 	}
 
-	printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\ncoluna: 3\nlinha: 2\n");
+	printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\nlinha: 2\ncoluna: 3\n\n");
 	for(int c = 0; c<9; c++) {
 		for(int i = 0; i < 3; i++) {
 			for(int c = 0; c < 3; c++) {
@@ -29,12 +29,12 @@ void old_game() {
 			printf("\n");
 		}
 		if(c%2==0) {
-			printf("\nturno %d\n,Vez do Jogador O - Escolha uma posição.\n", c);
+			printf("\nturno %d\n,Vez do Jogador O (1) - Escolha uma posição.\n", c);
 			printf("linha: ");
 			scanf(" %i", &jogadaLinha);
 			printf("coluna: ");
 			scanf(" %i", &jogadaColuna);
-			
+
 			if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0) {
 				game[jogadaLinha-1][jogadaColuna-1] = 1;
 				printf("o jogador x jogou na posição %i x %i\n", jogadaLinha, jogadaColuna);
@@ -44,7 +44,7 @@ void old_game() {
 			}
 
 		} else {
-			printf("turno %d\nVez do Jogador X - Escolha uma posição.\n", c);
+			printf("turno %d\nVez do Jogador X (0) - Escolha uma posição.\n", c);
 			printf("linha: ");
 			scanf(" %i", &jogadaLinha);
 			printf("coluna: ");
@@ -83,10 +83,10 @@ void old_game() {
 
 		if(vencedor == true) {
 			printf("jogado %i venceu", c%2);
-			break;
+			c=10;
 		} else if(c==9) {
 			printf("empate");
-			break;
+			c=10;
 		} else {
 			continue;
 		}
@@ -107,21 +107,16 @@ int main() {
 			printf("iniciando jogo da velha...\n\n");
 			loop = false;
 			old_game();
-
 			break;
 
 		case 2:
 			printf("iniciando palavras cruzadas...\n\n");
 			loop = false;
-
-
 			break;
 
 		case 3:
 			printf("iniciando forca...\n\n");
 			loop = false;
-
-
 			break;
 
 		case 0:
@@ -134,6 +129,6 @@ int main() {
 			break;
 		}
 	} while(loop == true);
-
+	
 	return 0;
 }
