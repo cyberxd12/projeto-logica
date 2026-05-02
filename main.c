@@ -7,90 +7,91 @@ void menu() {
 	printf("insira a opção desejada: \n1 - jogo da velha\n2 - Palavras cruzadas\n3- jogo da forca\n0 - para sair\n");
 }
 
+// Função para inicializar o tabuleiro
+void inicializar_tabuleiro(char game[3][3]) {
+    int caunt = 2;
+    for(int i = 0; i < 3; i++) {
+        for(int c = 0; c < 3; c++) {
+            caunt++;
+            game[i][c] = caunt;
+        }
+    }
+}
+
+// Função para exibir o tabuleiro
+void exibir_tabuleiro(char game[3][3]) {
+    for(int i = 0; i < 3; i++) {
+        for(int c = 0; c < 3; c++) {
+            printf("[%i] ", game[i][c]);
+        }
+        printf("\n");
+    }
+}
+
+// Função para verificar vencedor
+bool verificar_vencedor(char game[3][3]) {
+    for(int i = 0; i < 3; i++) {
+        if(game[i][0] == game[i][1] && game[i][1] == game[i][2]) {
+            return true;
+        }
+    }
+    for(int i = 0; i < 3; i++) {
+        if(game[0][i] == game[1][i] && game[1][i] == game[2][i]) {
+            return true;
+        }
+    }
+    if(game[0][0] == game[1][1] && game[1][1] == game[2][2]) {
+        return true;
+    }
+    if(game[0][2] == game[1][1] && game[1][1] == game[2][0]) {
+        return true;
+    }
+    return false;
+}
+
+// Função para processar o turno de um jogador
+bool processar_turno(char game[3][3], int jogador, int jogadaLinha, int jogadaColuna) {
+    if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0) {
+        game[jogadaLinha-1][jogadaColuna-1] = jogador;
+        printf("O jogador %c jogou na posição %i x %i\n", jogador == 1 ? 'O' : 'X', jogadaLinha, jogadaColuna);
+        return true;
+    } else {
+        printf("\nJá foi jogado nesse lugar\n\n");
+        return false;
+    }
+}
+
 void old_game() {
+    char game[3][3];
+    int jogadaColuna, jogadaLinha;
 
-	char game[3][3];
-	int jogadaColuna,jogadaLinha;
-	int caunt = 2;
+    inicializar_tabuleiro(game);
 
-	for(int i = 0; i < 3; i++) {
-		for(int c = 0; c < 3; c++) {
-			caunt++;
-			game[i][c] = caunt;
-		}
-	}
+    printf("Como jogar:\nCada jogador terá seu turno.\nEscolha a posição que será jogada na sua vez.\nA posição deve ser colocada em um quadrado 3x3.\nExemplo de escolha:\nLinha: 2\nColuna: 3\n\n");
 
-	printf("como jogar:\ncada jogador tera seu turno.\nescolha a posição que sera jogado na sua vez.\na posição deve ser colocada em um quadrado 3x3.\nexemplo de escolha:\nlinha: 2\ncoluna: 3\n\n");
-	for(int c = 0; c<9; c++) {
-		for(int i = 0; i < 3; i++) {
-			for(int c = 0; c < 3; c++) {
-				printf("[%i] ", game[i][c]);
-			}
-			printf("\n");
-		}
-		if(c%2==0) {
-			printf("\nturno %d\n,Vez do Jogador O (1) - Escolha uma posição.\n", c);
-			printf("linha: ");
-			scanf(" %i", &jogadaLinha);
-			printf("coluna: ");
-			scanf(" %i", &jogadaColuna);
+    for(int c = 0; c < 9; c++) {
+        exibir_tabuleiro(game);
 
-			if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0) {
-				game[jogadaLinha-1][jogadaColuna-1] = 1;
-				printf("o jogador x jogou na posição %i x %i\n", jogadaLinha, jogadaColuna);
-			} else {
-				printf("\njá foi jogado nesse lugar\n\n");
-				c--;
-			}
+        printf("\nTurno %d\nVez do Jogador %c - Escolha uma posição.\n", c, c % 2 == 0 ? 'O' : 'X');
+        printf("Linha: ");
+        scanf(" %i", &jogadaLinha);
+        printf("Coluna: ");
+        scanf(" %i", &jogadaColuna);
 
-		} else {
-			printf("turno %d\nVez do Jogador X (0) - Escolha uma posição.\n", c);
-			printf("linha: ");
-			scanf(" %i", &jogadaLinha);
-			printf("coluna: ");
-			scanf(" %i", &jogadaColuna);
+        if(!processar_turno(game, c % 2, jogadaLinha, jogadaColuna)) {
+            c--;
+            continue;
+        }
 
+        if(c >= 4 && verificar_vencedor(game)) {
+            printf("Jogador %c venceu!\n", c % 2 == 0 ? 'O' : 'X');
+            break;
+        }
 
-			if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0) {
-				game[jogadaLinha-1][jogadaColuna-1] = 0;
-				printf("o jogador x jogou na posição %i x %i\n", jogadaLinha, jogadaColuna);
-			} else {
-				printf("\njá foi jogado nesse lugar\n\n");
-				c--;
-			}
-		}
-
-		bool vencedor = false;
-
-		if (c>=4) {
-			for(int i = 0; i < 3; i++) {
-				if(game[i][0]== game[i][1] && game[i][1]== game[i][2]) {
-					vencedor = true;
-				}
-			}
-			for(int i = 0; i < 3; i++) {
-				if(game[0][i]== game[1][i] && game[1][i]== game[2][i]) {
-					vencedor = true;
-				}
-			}
-			if(game[0][0]== game[1][1] && game[1][1]== game[2][2]) {
-				vencedor = true;
-			}
-			if(game[0][2]== game[1][1] && game[1][1]== game[2][0]) {
-				vencedor = true;
-			}
-		}
-
-		if(vencedor == true) {
-			printf("jogado %i venceu", c%2);
-			c=10;
-		} else if(c==9) {
-			printf("empate");
-			c=10;
-		} else {
-			continue;
-		}
-	}
+        if(c == 8) {
+            printf("Empate!\n");
+        }
+    }
 }
 
 int main() {
