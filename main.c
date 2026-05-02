@@ -7,13 +7,11 @@ void menu() {
 	printf("insira a opção desejada: \n1 - jogo da velha\n2 - Palavras cruzadas\n3- jogo da forca\n0 - para sair\n");
 }
 
-// Função para inicializar o tabuleiro
+// Função para inicializar o tabuleiro com valor padrão '1'
 void inicializar_tabuleiro(char game[3][3]) {
-    int caunt = 2;
     for(int i = 0; i < 3; i++) {
         for(int c = 0; c < 3; c++) {
-            caunt++;
-            game[i][c] = caunt;
+            game[i][c] = '1';
         }
     }
 }
@@ -22,7 +20,7 @@ void inicializar_tabuleiro(char game[3][3]) {
 void exibir_tabuleiro(char game[3][3]) {
     for(int i = 0; i < 3; i++) {
         for(int c = 0; c < 3; c++) {
-            printf("[%i] ", game[i][c]);
+            printf("[%c] ", game[i][c]);
         }
         printf("\n");
     }
@@ -50,10 +48,10 @@ bool verificar_vencedor(char game[3][3]) {
 }
 
 // Função para processar o turno de um jogador
-bool processar_turno(char game[3][3], int jogador, int jogadaLinha, int jogadaColuna) {
-    if(game[jogadaLinha-1][jogadaColuna-1] != 1 && game[jogadaLinha-1][jogadaColuna-1] != 0) {
+bool processar_turno(char game[3][3], char jogador, int jogadaLinha, int jogadaColuna) {
+    if(game[jogadaLinha-1][jogadaColuna-1] == '1') {
         game[jogadaLinha-1][jogadaColuna-1] = jogador;
-        printf("O jogador %c jogou na posição %i x %i\n", jogador == 1 ? 'O' : 'X', jogadaLinha, jogadaColuna);
+        printf("O jogador %c jogou na posição %i x %i\n", jogador, jogadaLinha, jogadaColuna);
         return true;
     } else {
         printf("\nJá foi jogado nesse lugar\n\n");
@@ -72,19 +70,21 @@ void old_game() {
     for(int c = 0; c < 9; c++) {
         exibir_tabuleiro(game);
 
-        printf("\nTurno %d\nVez do Jogador %c - Escolha uma posição.\n", c, c % 2 == 0 ? 'O' : 'X');
+        char jogador = c % 2 == 0 ? 'O' : 'X';
+        printf("\nTurno %d\nVez do Jogador %c - Escolha uma posição.\n", c, jogador);
         printf("Linha: ");
         scanf(" %i", &jogadaLinha);
         printf("Coluna: ");
         scanf(" %i", &jogadaColuna);
 
-        if(!processar_turno(game, c % 2, jogadaLinha, jogadaColuna)) {
+        if(!processar_turno(game, jogador, jogadaLinha, jogadaColuna)) {
             c--;
             continue;
         }
 
         if(c >= 4 && verificar_vencedor(game)) {
-            printf("Jogador %c venceu!\n", c % 2 == 0 ? 'O' : 'X');
+			exibir_tabuleiro(game);
+            printf("Jogador %c venceu!\n", jogador);
             break;
         }
 
