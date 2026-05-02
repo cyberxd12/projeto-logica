@@ -17,7 +17,7 @@ Se a jogada for ímpar, escreva: "Vez do Jogador X - Escolha uma posição". Se 
 
 Leia a posição digitada e avise que foi registrada.
 
-status: em desenvolvimento...
+status: feito.
 
 3. O Motor do Jogo da Forca (Opção 3)
 O jogo da forca precisa reconhecer os erros dos jogadores.
@@ -27,7 +27,7 @@ Peça para o jogador digitar uma letra. Como ainda não temos as palavras, faça
 
 Se errar, diminua 1 vida e exiba quantas restam. Se a vida chegar a 0, exiba "Game Over".
 
-status: pendente.
+status: em desemvolvimento...
 
 4. Palavras-Cruzadas (Opção 2)
 Esta missão exigirá 3 cenários diferentes e conhecimentos avançados que veremos em breve. Por enquanto, se o usuário escolher a opção 2, apenas exiba: "Em desenvolvimento...".
